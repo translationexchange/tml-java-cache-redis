@@ -16,11 +16,15 @@
             <groupId>tr8n</groupId>
             <artifactId>tr8n_core</artifactId>
             <version>0.1.0</version>
+            <type>jar</type>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
             <version>2.4.2</version>
+            <type>jar</type>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.directory.studio</groupId>

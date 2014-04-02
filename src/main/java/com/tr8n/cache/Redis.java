@@ -74,12 +74,6 @@ public class Redis extends Cache {
 	protected String getVersionedKey(String key) {
 		return getVersion() + "_" + key;
 	}
-
-	private int getTimeout() {
-		if (getConfig().get("timeout") == null) 
-			return 0;
-		return (Integer) getConfig().get("timeout");
-	}
 	
 	@Override
 	public Object fetch(String key, Map<String, Object> options) {
