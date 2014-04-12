@@ -26,10 +26,10 @@ import java.util.Map;
 
 import redis.clients.jedis.Jedis;
 
-import com.tr8n.core.Cache;
 import com.tr8n.core.Tr8n;
+import com.tr8n.core.cache.CacheAdapter;
 
-public class Redis extends Cache {
+public class Redis extends CacheAdapter {
 	Jedis jedis;
 	Integer version;
 	
@@ -75,7 +75,6 @@ public class Redis extends Cache {
 		return getVersion() + "_" + key;
 	}
 	
-	@Override
 	public Object fetch(String key, Map<String, Object> options) {
 		if (isInlineMode(options)) return null;
 		
@@ -87,7 +86,6 @@ public class Redis extends Cache {
 		}
 	}
 
-	@Override
 	public void store(String key, Object data, Map<String, Object> options) {
 		if (isInlineMode(options)) return;
 
@@ -98,7 +96,6 @@ public class Redis extends Cache {
 		}
 	}
 
-	@Override
 	public void delete(String key, Map<String, Object> options) {
 		try {
 			getJedis().set(getVersionedKey(key), null);
@@ -107,4 +104,8 @@ public class Redis extends Cache {
 		}
 	}
 
+    public void reset() {
+    	incrementVersion();
+    }
+	
 }
