@@ -2,10 +2,10 @@
   <img src="https://raw.github.com/tr8n/tr8n/master/doc/screenshots/tr8nlogo.png">
 </p>
 
-Tr8n Redis Adapter
+TML Redis Adapter
 ==================
 
-This cache adapter allows you to cache Tr8n data in Redis server. 
+This cache adapter allows storing TML data using Redis server. 
 
 
 Installation
@@ -15,9 +15,9 @@ Add the following dependency to your pom.xml:
 
 ```xml
 <dependency>
-  <groupId>com.tr8nhub</groupId>
+  <groupId>com.translationexchange</groupId>
   <artifactId>cache-redis</artifactId>
-  <version>0.1.0</version>
+  <version>0.2.1</version>
 </dependency>
 ```
 
@@ -29,8 +29,8 @@ To initialize and use this cache adapter use the following settings:
 
 ```java
 
-Tr8n.getConfig().setCache(Utils.buildMap(
-  "class",  "com.tr8n.cache.Redis",
+Tml.getConfig().setCache(Utils.buildMap(
+  "class",  "com.translationexchange.cache.Redis",
   "host",   "localhost:6379",
   "version",  1,
   "timeout",  3600
@@ -38,27 +38,22 @@ Tr8n.getConfig().setCache(Utils.buildMap(
 
 ```
 
-
 Links
 ==================
 
 * Register on TranslationExchange.com: https://translationexchange.com
 
-* Read TranslationExchange's documentation: http://wiki.translationexchange.com
-
-* Visit TranslationExchange's blog: http://blog.translationexchange.com
-
 * Follow TranslationExchange on Twitter: https://twitter.com/translationx
 
 * Connect with TranslationExchange on Facebook: https://www.facebook.com/translationexchange
 
-* If you have any questions or suggestions, contact us: info@translationexchange.com
+* If you have any questions or suggestions, contact us: support@translationexchange.com
 
 
 Copyright and license
 ==================
 
-Copyright (c) 2014 Michael Berkovich, TranslationExchange.com
+Copyright (c) 2015 Translation Exchange, Inc.
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -78,4 +73,3 @@ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
 LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
