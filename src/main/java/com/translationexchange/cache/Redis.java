@@ -53,55 +53,24 @@ public class Redis extends CacheAdapter {
 		
 		return jedis;
 	}
-
-	public Integer getVersion() {
-		try {
-			version = new Integer(getJedis().get("version"));
-			if (version == null) {
-				version = (Integer) getConfig().get("version");
-				setVersion(version);
-			}
-		} catch (Exception ex) {
-			version = (Integer) getConfig().get("version");
-		}
 		
-		return version;
-	}
-	
-	public void setVersion(Integer version) {
-		try {
-			getJedis().set("version", version.toString());
-			this.version = version;
-		} catch (Exception ex) {
-		}
-	}
-
-	public void incrementVersion() {
-		setVersion(getVersion() + 1);
-	}
-	
-	protected String getVersionedKey(String key) {
-		return getVersion() + "_" + key;
-	}
-	
 	public Object fetch(String key, Map<String, Object> options) {
-		if (isInlineMode(options)) return null;
-		
 		try {
-			return getJedis().get(getVersionedKey(key));
+			String versionedKey = getVersionedKey(key);
+			Object data = getJedis().get(versionedKey); 
+			debug("cache " + (data == null ? "miss" : "hit") + " " + versionedKey);
+			return data;
 		} catch (Exception ex) {
-			Tml.getLogger().logException("Failed to get a value from Memcached", ex);
+			Tml.getLogger().logException("Failed to get a value from Redis", ex);
 			return null;
 		}
 	}
 
 	public void store(String key, Object data, Map<String, Object> options) {
-		if (isInlineMode(options)) return;
-
 		try {
 			getJedis().set(getVersionedKey(key), data.toString());
 		} catch (Exception ex) {
-			Tml.getLogger().logException("Failed to store a value in Memcached", ex);
+			Tml.getLogger().logException("Failed to store a value in Redis", ex);
 		}
 	}
 
@@ -109,12 +78,8 @@ public class Redis extends CacheAdapter {
 		try {
 			getJedis().set(getVersionedKey(key), null);
 		} catch (Exception ex) {
-			Tml.getLogger().logException("Failed to delete a value from Memcached", ex);
+			Tml.getLogger().logException("Failed to delete a value from Redis", ex);
 		}
 	}
-
-    public void reset() {
-    	incrementVersion();
-    }
 	
 }
