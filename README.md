@@ -30,8 +30,9 @@ To initialize and use this cache adapter use the following settings:
 ```java
 
 Tml.getConfig().setCache(Utils.buildMap(
-  "class",  "com.translationexchange.cache.Redis",
-  "host",   "localhost:6379"
+  "enabled",  true,
+  "class",    "com.translationexchange.cache.Redis",
+  "host",     "localhost:6379"
 ));
 
 ```
