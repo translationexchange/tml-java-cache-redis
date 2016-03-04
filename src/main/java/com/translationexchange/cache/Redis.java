@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015 Translation Exchange, Inc. All rights reserved.
+ * Copyright (c) 2016 Translation Exchange, Inc. All rights reserved.
  *
  *  _______                  _       _   _             ______          _
  * |__   __|                | |     | | (_)           |  ____|        | |
@@ -42,10 +42,20 @@ public class Redis extends CacheAdapter {
 	Jedis jedis;
 	Integer version;
 	
+	/**
+	 * Redis constructor
+	 *  
+	 * @param config
+	 */
 	public Redis(Map<String, Object> config) {
 		super(config);
 	}
 
+	/**
+	 * Returns Jedis
+	 * 
+	 * @return
+	 */
 	private Jedis getJedis() {
 		if (jedis == null) {
 			jedis = new Jedis((String)getConfig().get("host"));
@@ -54,11 +64,13 @@ public class Redis extends CacheAdapter {
 		return jedis;
 	}
 		
+	/**
+	 * Fetches data from Redis
+	 */
 	public Object fetch(String key, Map<String, Object> options) {
 		try {
-			String versionedKey = getVersionedKey(key);
-			Object data = getJedis().get(versionedKey); 
-			debug("cache " + (data == null ? "miss" : "hit") + " " + versionedKey);
+			Object data = getJedis().get(key); 
+			debug("cache " + (data == null ? "miss" : "hit") + " " + key);
 			return data;
 		} catch (Exception ex) {
 			Tml.getLogger().logException("Failed to get a value from Redis", ex);
@@ -66,17 +78,23 @@ public class Redis extends CacheAdapter {
 		}
 	}
 
+	/**
+	 * Stores data in Redis
+	 */
 	public void store(String key, Object data, Map<String, Object> options) {
 		try {
-			getJedis().set(getVersionedKey(key), data.toString());
+			getJedis().set(key, data.toString());
 		} catch (Exception ex) {
 			Tml.getLogger().logException("Failed to store a value in Redis", ex);
 		}
 	}
 
+	/**
+	 * Deletes data from Redis
+	 */
 	public void delete(String key, Map<String, Object> options) {
 		try {
-			getJedis().set(getVersionedKey(key), null);
+			getJedis().set(key, null);
 		} catch (Exception ex) {
 			Tml.getLogger().logException("Failed to delete a value from Redis", ex);
 		}
