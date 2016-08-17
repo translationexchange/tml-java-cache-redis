@@ -69,7 +69,7 @@ public class Redis extends CacheAdapter {
 	 */
 	public Object fetch(String key, Map<String, Object> options) {
 		try {
-			Object data = getJedis().get(key); 
+			Object data = getJedis().get(getVersionedKey(key, options)); 
 			debug("cache " + (data == null ? "miss" : "hit") + " " + key);
 			return data;
 		} catch (Exception ex) {
@@ -83,7 +83,7 @@ public class Redis extends CacheAdapter {
 	 */
 	public void store(String key, Object data, Map<String, Object> options) {
 		try {
-			getJedis().set(key, data.toString());
+			getJedis().set(getVersionedKey(key, options), data.toString());
 		} catch (Exception ex) {
 			Tml.getLogger().logException("Failed to store a value in Redis", ex);
 		}
@@ -94,7 +94,7 @@ public class Redis extends CacheAdapter {
 	 */
 	public void delete(String key, Map<String, Object> options) {
 		try {
-			getJedis().set(key, null);
+			getJedis().set(getVersionedKey(key, options), null);
 		} catch (Exception ex) {
 			Tml.getLogger().logException("Failed to delete a value from Redis", ex);
 		}
