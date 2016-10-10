@@ -5,7 +5,7 @@
 TML Redis Adapter
 ==================
 
-This cache adapter allows storing TML data using Redis server. 
+This cache adapter allows storing TML data using Redis server.
 
 
 Installation
@@ -17,7 +17,7 @@ Add the following dependency to your pom.xml:
 <dependency>
   <groupId>com.translationexchange</groupId>
   <artifactId>tml-redis</artifactId>
-  <version>0.2.1</version>
+  <version>0.2.2</version>
 </dependency>
 ```
 
