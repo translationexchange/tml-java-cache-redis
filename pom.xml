@@ -61,7 +61,7 @@
         <dependency>
             <groupId>com.translationexchange</groupId>
             <artifactId>tml</artifactId>
-            <version>0.2.12-SNAPSHOT</version>
+            <version>0.2.15</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
