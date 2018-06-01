@@ -1,5 +1,5 @@
-/**
- * Copyright (c) 2016 Translation Exchange, Inc. All rights reserved.
+/*
+ * Copyright (c) 2018 Translation Exchange, Inc. All rights reserved.
  *
  *  _______                  _       _   _             ______          _
  * |__   __|                | |     | | (_)           |  ____|        | |
@@ -27,6 +27,8 @@
  * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ *
+ * @author Michael Berkovich
  */
 
 package com.translationexchange.cache;
@@ -39,13 +41,12 @@ import com.translationexchange.core.Tml;
 import com.translationexchange.core.cache.CacheAdapter;
 
 public class Redis extends CacheAdapter {
-	Jedis jedis;
-	Integer version;
-	
+	private Jedis jedis;
+
 	/**
 	 * Redis constructor
 	 *  
-	 * @param config
+	 * @param config Redis configuration
 	 */
 	public Redis(Map<String, Object> config) {
 		super(config);
@@ -54,7 +55,7 @@ public class Redis extends CacheAdapter {
 	/**
 	 * Returns Jedis
 	 * 
-	 * @return
+	 * @return Jedis instance
 	 */
 	private Jedis getJedis() {
 		if (jedis == null) {
@@ -69,7 +70,7 @@ public class Redis extends CacheAdapter {
 	 */
 	public Object fetch(String key, Map<String, Object> options) {
 		try {
-			Object data = getJedis().get(key); 
+			Object data = getJedis().get(getVersionedKey(key, options)); 
 			debug("cache " + (data == null ? "miss" : "hit") + " " + key);
 			return data;
 		} catch (Exception ex) {
@@ -83,7 +84,7 @@ public class Redis extends CacheAdapter {
 	 */
 	public void store(String key, Object data, Map<String, Object> options) {
 		try {
-			getJedis().set(key, data.toString());
+			getJedis().set(getVersionedKey(key, options), data.toString());
 		} catch (Exception ex) {
 			Tml.getLogger().logException("Failed to store a value in Redis", ex);
 		}
@@ -94,7 +95,7 @@ public class Redis extends CacheAdapter {
 	 */
 	public void delete(String key, Map<String, Object> options) {
 		try {
-			getJedis().set(key, null);
+			getJedis().set(getVersionedKey(key, options), null);
 		} catch (Exception ex) {
 			Tml.getLogger().logException("Failed to delete a value from Redis", ex);
 		}

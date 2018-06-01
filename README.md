@@ -40,7 +40,7 @@ Tml.getConfig().setCache(Utils.buildMap(
 Links
 ==================
 
-* Register on TranslationExchange.com: http://translationexchange.com
+* Register on TranslationExchange.com: https://translationexchange.com
 
 * Follow TranslationExchange on Twitter: https://twitter.com/translationx
 
@@ -52,7 +52,7 @@ Links
 Copyright and license
 ==================
 
-Copyright (c) 2015 Translation Exchange, Inc.
+Copyright (c) 2018 Translation Exchange, Inc.
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
